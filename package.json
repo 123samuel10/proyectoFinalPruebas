@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "jest --coverage",
+    "test": "jest --coverage --runInBand",
     "test:unit": "jest --testMatch='**/tests/unit/**/*.test.js'",
-    "test:integration": "jest --testMatch='**/tests/integration/**/*.test.js'",
+    "test:integration": "jest --testMatch='**/tests/integration/**/*.test.js' --runInBand",
     "test:e2e": "playwright test",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint src/**/*.js --fix"
