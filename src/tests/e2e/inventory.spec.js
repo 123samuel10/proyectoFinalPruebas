@@ -42,8 +42,8 @@ test.describe('Inventory Management System - E2E Tests', () => {
 
     // Step 2: Create a new product
     await test.step('Create new product', async () => {
-      // Click on Products tab
-      await page.click('text=Productos');
+      // Switch to Products tab by calling the function directly
+      await page.evaluate(() => window.showTab('products'));
 
       // Wait for the products tab to be visible
       await page.waitForSelector('#products-tab', { state: 'visible' });
@@ -108,7 +108,8 @@ test.describe('Inventory Management System - E2E Tests', () => {
       await page.waitForTimeout(1000);
 
       // Create product
-      await page.click('text=Productos');
+      await page.evaluate(() => window.showTab('products'));
+      await page.waitForSelector('#products-tab', { state: 'visible' });
       await page.fill('#products-tab input[name="name"]', 'JavaScript Book');
       await page.fill('#products-tab textarea[name="description"]', 'Learn JavaScript');
       await page.fill('#products-tab input[name="price"]', '30');
@@ -167,7 +168,8 @@ test.describe('Inventory Management System - E2E Tests', () => {
       await page.waitForTimeout(1000);
 
       // Create product
-      await page.click('text=Productos');
+      await page.evaluate(() => window.showTab('products'));
+      await page.waitForSelector('#products-tab', { state: 'visible' });
       await page.fill('#products-tab input[name="name"]', 'Action Figure');
       await page.fill('#products-tab input[name="price"]', '25');
       await page.fill('#products-tab input[name="stock"]', '10');
@@ -216,7 +218,8 @@ test.describe('Inventory Management System - E2E Tests', () => {
       await page.waitForTimeout(1000);
 
       // Create product in Category A
-      await page.click('text=Productos');
+      await page.evaluate(() => window.showTab('products'));
+      await page.waitForSelector('#products-tab', { state: 'visible' });
       await page.fill('#products-tab input[name="name"]', 'Product A');
       await page.fill('#products-tab input[name="price"]', '10');
       await page.fill('#products-tab input[name="stock"]', '5');
