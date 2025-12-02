@@ -70,11 +70,7 @@ test.describe('Inventory Management System - E2E Tests', () => {
 
     // Step 3: View product in the list
     await test.step('View product in list', async () => {
-      // Click on List tab
-      await page.click('text=Listar');
-
-      // Wait for products to load
-      await page.waitForSelector('#list-tab', { state: 'visible' });
+      // Wait for products to load in the list (already in products tab)
       await page.waitForTimeout(1000);
 
       // Verify product appears in the list
@@ -122,8 +118,7 @@ test.describe('Inventory Management System - E2E Tests', () => {
 
     // Edit the product
     await test.step('Edit product', async () => {
-      // Go to list
-      await page.click('text=Listar');
+      // Wait for product to appear in list (already in products tab)
       await page.waitForSelector('text=JavaScript Book');
 
       // Click edit button
@@ -181,8 +176,7 @@ test.describe('Inventory Management System - E2E Tests', () => {
 
     // Delete the product
     await test.step('Delete product', async () => {
-      // Go to list
-      await page.click('text=Listar');
+      // Wait for product to appear in list (already in products tab)
       await page.waitForSelector('text=Action Figure');
 
       // Setup dialog handler to accept confirmation
@@ -240,8 +234,7 @@ test.describe('Inventory Management System - E2E Tests', () => {
 
     // Test filtering
     await test.step('Filter products', async () => {
-      // Go to list
-      await page.click('text=Listar');
+      // Wait for products to load in list (already in products tab)
       await page.waitForTimeout(1000);
 
       // Both products should be visible
