@@ -32,10 +32,17 @@ function showTab(tabName) {
     });
 
     // Show selected tab
-    document.getElementById(`${tabName}-tab`).classList.add('active');
+    const selectedTab = document.getElementById(`${tabName}-tab`);
+    if (selectedTab) {
+        selectedTab.classList.add('active');
+    }
 
-    // Add active class to clicked button
-    event.target.classList.add('active');
+    // Add active class to button with matching onclick
+    document.querySelectorAll('.tab-button').forEach(btn => {
+        if (btn.getAttribute('onclick')?.includes(tabName)) {
+            btn.classList.add('active');
+        }
+    });
 }
 
 // Categories Functions
