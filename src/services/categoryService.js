@@ -26,6 +26,9 @@ class CategoryService {
       if (error.name === 'SequelizeUniqueConstraintError') {
         throw new Error('Category name already exists');
       }
+      if (error.name === 'SequelizeValidationError') {
+        throw new Error(error.errors.map(e => e.message).join(', '));
+      }
       throw new Error(`Error creating category: ${error.message}`);
     }
   }

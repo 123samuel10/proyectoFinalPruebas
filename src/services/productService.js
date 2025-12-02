@@ -31,17 +31,22 @@ class ProductService {
   }
 
   async createProduct(productData) {
-    try {
-      // Verify category exists
+    // Verify category exists if provided
+    if (productData.category_id) {
       const category = await Category.findByPk(productData.category_id);
       if (!category) {
         throw new Error('Category not found');
       }
+    }
 
+    try {
       const product = await Product.create(productData);
       return await this.getProductById(product.id);
     } catch (error) {
-      throw new Error(`Error creating product: ${error.message}`);
+      if (error.name === 'SequelizeValidationError') {
+        throw new Error(error.errors.map(e => e.message).join(', '));
+      }
+      throw error;
     }
   }
 
