@@ -34,7 +34,7 @@ jobs:
           node-version: '18'
 
       - name: Install backend dependencies
-        run: npm ci
+        run: npm install
 
       - name: Setup environment variables
         run: |
