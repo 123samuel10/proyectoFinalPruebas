@@ -40,8 +40,8 @@ class ProductController {
         data: product
       });
     } catch (error) {
-      const statusCode = error.message.includes('not found') ? 404 : 400;
-      res.status(statusCode).json({
+      // Always return 400 for create validation errors
+      res.status(400).json({
         success: false,
         error: error.message
       });
@@ -56,7 +56,13 @@ class ProductController {
         data: product
       });
     } catch (error) {
-      const statusCode = error.message.includes('not found') ? 404 : 500;
+      let statusCode = 500;
+      if (error.message === 'Product not found') {
+        statusCode = 404;
+      } else if (error.message === 'Category not found') {
+        statusCode = 400;
+      }
+
       res.status(statusCode).json({
         success: false,
         error: error.message

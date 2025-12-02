@@ -40,8 +40,8 @@ class CategoryController {
         data: category
       });
     } catch (error) {
-      const statusCode = error.message.includes('already exists') ? 409 : 400;
-      res.status(statusCode).json({
+      // Return 400 for all validation errors including duplicates
+      res.status(400).json({
         success: false,
         error: error.message
       });
@@ -57,8 +57,11 @@ class CategoryController {
       });
     } catch (error) {
       let statusCode = 500;
-      if (error.message === 'Category not found') statusCode = 404;
-      else if (error.message.includes('already exists')) statusCode = 409;
+      if (error.message === 'Category not found') {
+        statusCode = 404;
+      } else if (error.message.includes('already exists')) {
+        statusCode = 400; // Changed from 409 to 400
+      }
 
       res.status(statusCode).json({
         success: false,
