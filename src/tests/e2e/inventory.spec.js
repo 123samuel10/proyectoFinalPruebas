@@ -70,8 +70,9 @@ test.describe('Inventory Management System - E2E Tests', () => {
 
     // Step 3: View product in the list
     await test.step('View product in list', async () => {
-      // Wait for products to load in the list (already in products tab)
-      await page.waitForTimeout(1000);
+      // Wait for products list to load
+      await page.waitForSelector('#products-list', { state: 'visible' });
+      await page.waitForTimeout(1500);
 
       // Verify product appears in the list
       await page.waitForSelector('text=Gaming Laptop', { timeout: 5000 });
@@ -88,6 +89,8 @@ test.describe('Inventory Management System - E2E Tests', () => {
       const stockExists = await page.isVisible('text=15 unidades');
       expect(stockExists).toBeTruthy();
 
+      // Wait a bit more for category badge to render
+      await page.waitForSelector('.category-badge', { state: 'visible', timeout: 3000 });
       const categoryExists = await page.isVisible('text=Electronics Test');
       expect(categoryExists).toBeTruthy();
     });
