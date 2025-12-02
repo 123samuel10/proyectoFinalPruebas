@@ -9,6 +9,7 @@ const categoryController = require('../controllers/categoryController');
  */
 router.get('/', categoryController.getAll);
 
+
 /**
  * @route   GET /api/categories/:id
  * @desc    Get category by ID
