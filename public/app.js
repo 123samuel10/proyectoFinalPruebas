@@ -23,6 +23,7 @@ function setupEventListeners() {
 function showTab(tabName) {
     // Hide all tabs
     document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.style.display = 'none';
         tab.classList.remove('active');
     });
 
@@ -34,12 +35,14 @@ function showTab(tabName) {
     // Show selected tab
     const selectedTab = document.getElementById(`${tabName}-tab`);
     if (selectedTab) {
+        selectedTab.style.display = 'block';
         selectedTab.classList.add('active');
     }
 
     // Add active class to button with matching onclick
     document.querySelectorAll('.tab-button').forEach(btn => {
-        if (btn.getAttribute('onclick')?.includes(tabName)) {
+        const onclick = btn.getAttribute('onclick');
+        if (onclick && onclick.includes(tabName)) {
             btn.classList.add('active');
         }
     });
