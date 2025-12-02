@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: inventario-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: inventario_db
+      MYSQL_USER: inventario_user
+      MYSQL_PASSWORD: inventario_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - inventario-network
+
+  app:
+    build: .
+    container_name: inventario-app
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: inventario_db
+      DB_USER: inventario_user
+      DB_PASSWORD: inventario_pass
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - inventario-network
+
+volumes:
+  mysql_data:
+
+networks:
+  inventario-network:
+    driver: bridge
