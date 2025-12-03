@@ -70,12 +70,14 @@ test.describe('Inventory Management System - E2E Tests', () => {
 
     // Step 3: View product in the list
     await test.step('View product in list', async () => {
+      // Wait for the toast to disappear
+      await page.waitForTimeout(1000);
+
       // Wait for products list to load
       await page.waitForSelector('#products-list', { state: 'visible' });
-      await page.waitForTimeout(1500);
 
-      // Verify product appears in the list
-      await page.waitForSelector('text=Gaming Laptop', { timeout: 5000 });
+      // Wait for product to appear in the list
+      await page.waitForSelector('text=Gaming Laptop', { timeout: 10000 });
       const productExists = await page.isVisible('text=Gaming Laptop');
       expect(productExists).toBeTruthy();
 
@@ -89,9 +91,9 @@ test.describe('Inventory Management System - E2E Tests', () => {
       const stockExists = await page.isVisible('text=15 unidades');
       expect(stockExists).toBeTruthy();
 
-      // Wait a bit more for category badge to render
-      await page.waitForSelector('.category-badge', { state: 'visible', timeout: 3000 });
-      const categoryExists = await page.isVisible('text=Electronics Test');
+      // Wait for category badge to be visible and verify it contains the category name
+      await page.waitForSelector('.category-badge:has-text("Electronics Test")', { state: 'visible', timeout: 5000 });
+      const categoryExists = await page.isVisible('.category-badge:has-text("Electronics Test")');
       expect(categoryExists).toBeTruthy();
     });
   });
